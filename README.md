@@ -1,4 +1,4 @@
-# `Express Typescript Starter `
+# `Express Typescript Starter - SHIP 2.0 Logic Module + SQLite DB`
 
 ## `Express Typescript Starter RESTful API`
 
