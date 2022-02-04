@@ -11,14 +11,6 @@ const ENV = cleanEnv(process.env, {
   // Security
   JWT_SECRET: str(),
   BCRYPT_SALT_ROUNDS: num(),
-  // Temp
-  TEMP_DIR: str(),
-  // AWS
-  AWS_REGION: str(),
-  // AWS - S3
-  AWS_S3_BUCKET_ACCESS_KEY_ID: str(),
-  AWS_S3_BUCKET_SECRET_ACCESS_KEY: str(),
-  AWS_S3_BUCKET_NAME: str(),
 });
 
 export default ENV;

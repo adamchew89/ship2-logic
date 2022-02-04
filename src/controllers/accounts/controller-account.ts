@@ -1,11 +1,9 @@
 import { RequestHandler } from "express";
 import _ from "lodash";
 import { AccessType, Account } from "z@DBs/schemas/accounts/schema-account";
-import { Reply } from "z@DBs/schemas/replies/schema-reply";
 import ErrorBase, { HTTPStatusCodes } from "z@Errors/error-base";
 import ServiceAccount from "z@Services/accounts/service-account";
 import ServiceAuth from "z@Services/auths/service-auth";
-import ServiceReply from "z@Services/replies/service-reply";
 import { encrypt } from "z@Utils/auths/utils-auth";
 import Logger from "z@Utils/loggers/utils-logger";
 
@@ -29,7 +27,6 @@ class ControllerAccount {
   private className = "ControllerAccount";
   private accountService = new ServiceAccount();
   private authService = new ServiceAuth();
-  private replyService = new ServiceReply();
 
   init: RequestHandler = async (req, res, next) => {
     const body = req.body as RequestBody;
@@ -116,14 +113,6 @@ class ControllerAccount {
         hash: await encrypt(body.pin),
       } as Account;
       const newAccount = await this.accountService.createAccount(data);
-      /**
-       * Create a "Reply" for new Account
-       */
-      const replyData: Reply = {
-        account: newAccount._id,
-        isAttending: false,
-      } as Reply;
-      await this.replyService.createReply(replyData);
       const newSanitizedAccount = await this.accountService.findAccountById(
         newAccount._id
       );

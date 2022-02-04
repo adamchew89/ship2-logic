@@ -9,7 +9,6 @@ import ControllerAccount from "./controller-account";
 
 jest.mock("z@Services/accounts/service-account");
 jest.mock("z@Services/auths/service-auth");
-jest.mock("z@Services/replies/service-reply");
 
 describe("[ControllerAccount]", () => {
   let mockReq: Request;

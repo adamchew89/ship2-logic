@@ -8,7 +8,6 @@ This project is created with the following main libraries:
 
 | Library                                                        | Purpose                                        |
 | -------------------------------------------------------------- | ---------------------------------------------- |
-| [AWS-SDK](https://github.com/aws/aws-sdk-js#readme)            | AWS SDK for javascript                         |
 | [BcryptJS](https://github.com/dcodeIO/bcrypt.js#readme)        | Password hashing for Node.js                   |
 | [Body-Parser](https://github.com/expressjs/body-parser#readme) | Middleware body parser for Node.js             |
 | [Cors](https://github.com/expressjs/cors#readme)               | Middleware cors enabler for Node.js            |
@@ -19,7 +18,6 @@ This project is created with the following main libraries:
 | [Lodash](https://lodash.com/)                                  | Javascript utility library                     |
 | [Mongoose](https://mongoosejs.com/)                            | MongoDB validation, casting, and boiler plates |
 | [Morgan](https://github.com/expressjs/morgan#readme)           | HTTP request middleware logger                 |
-| [Multer](https://github.com/expressjs/multer#readme)           | Middleware file upload for Node.js             |
 | [Winston](https://github.com/winstonjs/winston#readme)         | Multi-transport logger                         |
 
 ### Development
