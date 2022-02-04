@@ -42,7 +42,7 @@ class MiddlewareAuth {
     const body = req.body as RequestBody;
     const params = req.params as RequestParams;
     const accountId = params.id || params.accountid;
-    if (body.user._id.toString() !== accountId) {
+    if (body.user._id.toString() !== accountId?.toString()) {
       let isAdmin = body.user.access === AccessType.ADMIN;
       if (!isAdmin) {
         Logger.debug(

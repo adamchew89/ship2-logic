@@ -9,7 +9,6 @@ import Logger from "z@Utils/loggers/utils-logger";
 
 export interface Credential {
   name: string;
-  email: string;
   mobile: string;
   pin: string;
   newPin?: string;
@@ -44,7 +43,6 @@ class ControllerAccount {
       }
       const data: Account = {
         name: body.name,
-        email: body.email,
         mobile: body.mobile,
         access: AccessType.ADMIN,
         hash: await encrypt(body.pin),
@@ -66,7 +64,7 @@ class ControllerAccount {
     const params = req.params as RequestParams;
     try {
       const existingAccount = await this.accountService.findAccountById(
-        params.id
+        +params.id
       );
       return res.status(HTTPStatusCodes.OK).json({
         message: "Success",
@@ -92,7 +90,7 @@ class ControllerAccount {
     const body = req.body as RequestBody;
     try {
       const existingAccounts = await this.accountService.findAccounts({
-        email: body.email,
+        mobile: body.mobile,
       });
       if (!_.isEmpty(existingAccounts)) {
         Logger.debug(
@@ -108,7 +106,6 @@ class ControllerAccount {
       }
       const data: Account = {
         name: body.name,
-        email: body.email,
         mobile: body.mobile,
         hash: await encrypt(body.pin),
       } as Account;
@@ -129,10 +126,9 @@ class ControllerAccount {
     const body = req.body as RequestBody;
     try {
       const account: Account = await this.accountService.findAccountById(
-        params.id
+        +params.id
       );
       account.name = body.name;
-      account.email = body.email;
       account.mobile = body.mobile;
       const data: Account = await this.accountService.updateAccount(account);
       return res.status(HTTPStatusCodes.OK).json({
@@ -147,7 +143,9 @@ class ControllerAccount {
   deleteExistingAccount: RequestHandler = async (req, res, next) => {
     const params = req.params as RequestParams;
     try {
-      const deletedAccount = await this.accountService.deleteAccount(params.id);
+      const deletedAccount = await this.accountService.deleteAccount(
+        +params.id
+      );
       res
         .status(HTTPStatusCodes.OK)
         .json({ message: "Account deleted.", data: deletedAccount });
@@ -161,7 +159,7 @@ class ControllerAccount {
     const body = req.body as RequestBody;
     try {
       await this.authService.changeCredentials(
-        params.id,
+        +params.id,
         body.pin,
         body.newPin!
       );

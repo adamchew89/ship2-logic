@@ -10,6 +10,11 @@ export async function connect(): Promise<void> {
       database: ENV.DB_HOST!,
       entities: [SchemaAccount],
       synchronize: true,
+      migrationsTableName: "migration",
+      migrations: ["src/dbs/migrations/*.ts"],
+      cli: {
+        migrationsDir: "src/dbs/migrations",
+      },
     });
     console.log({ connection });
   } catch (error) {

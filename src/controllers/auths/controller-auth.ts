@@ -43,7 +43,7 @@ class ControllerAuth {
     const params = req.params as RequestParams;
     const body = req.body as RequestBody;
     try {
-      await this.authService.resetCredentials(params.accountid, body.newPin!);
+      await this.authService.resetCredentials(+params.accountid, body.newPin!);
       res.status(HTTPStatusCodes.OK).json({ message: "Success" });
     } catch (error) {
       next(error);

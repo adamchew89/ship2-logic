@@ -44,7 +44,7 @@ describe("[ControllerAccount]", () => {
         .mockImplementation((criteria: any) => Promise.resolve([]));
       jest
         .spyOn(ServiceAccount.prototype, "findAccountById")
-        .mockImplementation((id: string) =>
+        .mockImplementation((id: number) =>
           Promise.resolve(FixtureAccounts.accounts[0])
         );
       jest
@@ -95,7 +95,7 @@ describe("[ControllerAccount]", () => {
     it("(Failure Path) should return Failure when account was not retrieved successfully", async () => {
       jest
         .spyOn(ServiceAccount.prototype, "findAccountById")
-        .mockImplementationOnce((id: string) => Promise.reject(new Error()));
+        .mockImplementationOnce((id: number) => Promise.reject(new Error()));
       await accountController.getExistingAccount(mockReq, mockRes, mockNext);
       expect(mockNext).toBeCalledWith(expect.any(Error));
     });
@@ -110,7 +110,7 @@ describe("[ControllerAccount]", () => {
     it("(Failure Path) should return Failure when accounts were not retrieved successfully", async () => {
       jest
         .spyOn(ServiceAccount.prototype, "findAccounts")
-        .mockImplementationOnce((id: string) => Promise.reject(new Error()));
+        .mockImplementationOnce((id: number) => Promise.reject(new Error()));
       await accountController.getAllAccount(mockReq, mockRes, mockNext);
       expect(mockNext).toBeCalledWith(expect.any(Error));
     });
@@ -126,7 +126,7 @@ describe("[ControllerAccount]", () => {
         .mockImplementation((criteria: any) => Promise.resolve([]));
       jest
         .spyOn(ServiceAccount.prototype, "findAccountById")
-        .mockImplementation((id: string) =>
+        .mockImplementation((id: number) =>
           Promise.resolve(FixtureAccounts.accounts[0])
         );
       jest
@@ -170,7 +170,7 @@ describe("[ControllerAccount]", () => {
       });
       jest
         .spyOn(ServiceAccount.prototype, "findAccountById")
-        .mockImplementation((id: string) =>
+        .mockImplementation((id: number) =>
           Promise.resolve(FixtureAccounts.accounts[0])
         );
     });
@@ -183,7 +183,7 @@ describe("[ControllerAccount]", () => {
     it("(Failure Path) show return Failure if account was not retrieved successfully", async () => {
       jest
         .spyOn(ServiceAccount.prototype, "findAccountById")
-        .mockImplementationOnce((id: string) => Promise.reject(new Error()));
+        .mockImplementationOnce((id: number) => Promise.reject(new Error()));
       await accountController.updateExistingAccount(mockReq, mockRes, mockNext);
       expect(mockNext).toHaveBeenCalledWith(expect.any(Error));
     });
@@ -214,7 +214,7 @@ describe("[ControllerAccount]", () => {
     it("(Failure Path) show return Failure if account does not exists", async () => {
       jest
         .spyOn(ServiceAccount.prototype, "deleteAccount")
-        .mockImplementationOnce((id: string) => Promise.reject(new Error()));
+        .mockImplementationOnce((id: number) => Promise.reject(new Error()));
       await accountController.deleteExistingAccount(mockReq, mockRes, mockNext);
       expect(mockNext).toHaveBeenCalledWith(expect.any(Error));
     });
@@ -236,7 +236,7 @@ describe("[ControllerAccount]", () => {
     it("(Failure Path) should call next when failed to change pin", async () => {
       jest
         .spyOn(ServiceAuth.prototype, "changeCredentials")
-        .mockImplementationOnce((id: string, pin: string, newPin: string) =>
+        .mockImplementationOnce((id: number, pin: string, newPin: string) =>
           Promise.reject(new Error())
         );
       await accountController.changeAccountPin(mockReq, mockRes, mockNext);

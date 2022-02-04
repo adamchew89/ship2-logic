@@ -1,5 +1,4 @@
-import { getManager, getRepository } from "typeorm";
-import SchemaAccount, { Account } from "z@DBs/schemas/accounts/schema-account";
+import ModelAccount, { Account } from "z@DBs/schemas/accounts/schema-account";
 import ErrorBase, { HTTPStatusCodes } from "z@Errors/error-base";
 import Logger from "z@Utils/loggers/utils-logger";
 
@@ -15,14 +14,13 @@ class ServiceAccount {
       //   .select("+access")
       //   .select("+hash")
       //   .exec();
-      return getManager().find(SchemaAccount, criteria) as unknown as Account[];
+      return ModelAccount.find(criteria);
     }
-    // return await ModelAccount.find(criteria);
-    return getManager().find(SchemaAccount, criteria) as unknown as Account[];
+    return ModelAccount.find(criteria);
   }
 
   async findAccountById(
-    id: string,
+    _id: number,
     showSensitive: boolean = false
   ): Promise<Account> {
     let account: Account;
@@ -31,9 +29,9 @@ class ServiceAccount {
       //   .select("+access")
       //   .select("+hash")
       //   .exec();
-      account = getRepository(SchemaAccount).findOne(id) as unknown as Account;
+      account = (await ModelAccount.findOne({ _id })) as Account;
     } else {
-      account = getRepository(SchemaAccount).findOne(id) as unknown as Account;
+      account = (await ModelAccount.findOne({ _id })) as Account;
     }
     if (account) {
       return account;
@@ -47,24 +45,26 @@ class ServiceAccount {
   }
 
   async createAccount(newAccount: Account): Promise<Account> {
-    // let account = new ModelAccount(newAccount);
-    // account = await account.save();
-    let account = getManager().save(newAccount);
+    const account = new ModelAccount();
+    (Object.keys(newAccount) as (keyof Account)[]).forEach((key) => {
+      if (key === "_id") return;
+      account[key] = newAccount[key]! as any;
+    });
+    await account.save();
     return account;
   }
 
   async updateAccount(updatedAccount: Account): Promise<Account> {
     // const account = await ModelAccount.findById(updatedAccount._id);
-    const account = getRepository(SchemaAccount).findOne(
-      updatedAccount._id
-    ) as unknown as Account;
+    const account = (await ModelAccount.findOne({
+      _id: updatedAccount._id,
+    })) as ModelAccount;
     if (account) {
-      // (Object.keys(updatedAccount) as (keyof Account)[]).forEach((key) => {
-      //   if (key === "_id") return;
-      //   account[key] = updatedAccount[key];
-      // });
-      // await account.save();
-      getManager().save(account);
+      (Object.keys(updatedAccount) as (keyof Account)[]).forEach((key) => {
+        if (key === "_id") return;
+        account[key] = updatedAccount[key]! as any;
+      });
+      await account.save();
       return account;
     }
     Logger.debug(
@@ -77,14 +77,12 @@ class ServiceAccount {
     );
   }
 
-  async deleteAccount(id: string): Promise<Account> {
-    // const account = await ModelAccount.findById(id);
-    const account = getRepository(SchemaAccount).findOne(
-      id
-    ) as unknown as Account;
+  async deleteAccount(_id: number): Promise<Account> {
+    const account = (await ModelAccount.findOne({
+      _id,
+    })) as ModelAccount;
     if (account) {
-      // await account.remove();
-      getManager().remove(account);
+      await account.remove();
       return account;
     }
     Logger.debug(

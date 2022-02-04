@@ -79,7 +79,7 @@ describe("[ControllerAuth]", () => {
     it("(Failure Path) should call next when failed to change pin", async () => {
       jest
         .spyOn(ServiceAuth.prototype, "resetCredentials")
-        .mockImplementationOnce((id: string, newPin: string) =>
+        .mockImplementationOnce((id: number, newPin: string) =>
           Promise.reject(new Error())
         );
       await authController.resetPin(mockReq, mockRes, mockNext);

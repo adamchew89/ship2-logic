@@ -1,21 +1,20 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 export enum AccessType {
   ADMIN = "admin",
   NORMAL = "normal",
 }
 export interface Account {
-  _id: string;
+  _id: number;
   name: string;
   mobile: string;
-  email?: string;
-  access?: AccessType;
+  access: AccessType;
   hash?: string;
   token?: string;
 }
 
-@Entity("Account")
-class SchemaAccount {
+@Entity("accounts")
+class ModelAccount extends BaseEntity {
   @PrimaryGeneratedColumn({ name: "_id" })
   _id!: number;
 
@@ -31,13 +30,13 @@ class SchemaAccount {
     enum: AccessType,
     default: AccessType.NORMAL,
   })
-  access?: AccessType;
+  access!: AccessType;
 
-  @Column({ name: "hash" })
+  @Column({ name: "hash", nullable: true })
   hash?: string;
 
-  @Column({ name: "token" })
+  @Column({ name: "token", nullable: true })
   token?: string;
 }
 
-export default SchemaAccount;
+export default ModelAccount;

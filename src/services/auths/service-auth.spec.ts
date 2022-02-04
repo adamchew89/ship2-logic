@@ -32,7 +32,6 @@ describe("[ServiceAuth]", () => {
     beforeEach(() => {
       mockCredentials = {
         name: "name",
-        email: "email",
         mobile: "mobile",
       } as Account;
       mockPin = "pin";

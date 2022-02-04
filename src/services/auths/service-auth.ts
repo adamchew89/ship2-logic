@@ -27,10 +27,9 @@ class ServiceAuth {
       );
       account.token = token;
       await this.accountService.updateAccount(account);
-      const { email, mobile, name } = account;
+      const { mobile, name } = account;
       const payload: Account = {
         _id,
-        email,
         mobile,
         name,
         token: jwt.sign(
@@ -70,11 +69,11 @@ class ServiceAuth {
   }
 
   async changeCredentials(
-    id: string,
+    id: number,
     currentPin: string,
     newPin: string
   ): Promise<void> {
-    const account = await this.accountService.findAccountById(id, true);
+    const account = await this.accountService.findAccountById(+id, true);
     if (await compare(currentPin, account.hash!)) {
       account.hash = await encrypt(newPin);
       await this.accountService.updateAccount(account);
@@ -86,8 +85,8 @@ class ServiceAuth {
     throw new ErrorUnauthorized();
   }
 
-  async resetCredentials(id: string, newPin: string): Promise<void> {
-    const account = await this.accountService.findAccountById(id, true);
+  async resetCredentials(id: number, newPin: string): Promise<void> {
+    const account = await this.accountService.findAccountById(+id, true);
     account.hash = await encrypt(newPin);
     await this.accountService.updateAccount(account);
     return;
