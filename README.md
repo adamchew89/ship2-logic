@@ -6,19 +6,20 @@
 
 This project is created with the following main libraries:
 
-| Library                                                        | Purpose                                        |
-| -------------------------------------------------------------- | ---------------------------------------------- |
-| [BcryptJS](https://github.com/dcodeIO/bcrypt.js#readme)        | Password hashing for Node.js                   |
-| [Body-Parser](https://github.com/expressjs/body-parser#readme) | Middleware body parser for Node.js             |
-| [Cors](https://github.com/expressjs/cors#readme)               | Middleware cors enabler for Node.js            |
-| [Dotenv](https://github.com/motdotla/dotenv#readme)            | Environment variable loader module             |
-| [Envalid](https://github.com/af/envalid#readme)                | Environment variable validator                 |
-| [Express](https://expressjs.com/)                              | Minimalist web framework for Node.js           |
-| [JWT](https://jwt.io/)                                         | Json web token                                 |
-| [Lodash](https://lodash.com/)                                  | Javascript utility library                     |
-| [Mongoose](https://mongoosejs.com/)                            | MongoDB validation, casting, and boiler plates |
-| [Morgan](https://github.com/expressjs/morgan#readme)           | HTTP request middleware logger                 |
-| [Winston](https://github.com/winstonjs/winston#readme)         | Multi-transport logger                         |
+| Library                                                        | Purpose                              |
+| -------------------------------------------------------------- | ------------------------------------ |
+| [BcryptJS](https://github.com/dcodeIO/bcrypt.js#readme)        | Password hashing for Node.js         |
+| [Body-Parser](https://github.com/expressjs/body-parser#readme) | Middleware body parser for Node.js   |
+| [Cors](https://github.com/expressjs/cors#readme)               | Middleware cors enabler for Node.js  |
+| [Dotenv](https://github.com/motdotla/dotenv#readme)            | Environment variable loader module   |
+| [Envalid](https://github.com/af/envalid#readme)                | Environment variable validator       |
+| [Express](https://expressjs.com/)                              | Minimalist web framework for Node.js |
+| [JWT](https://jwt.io/)                                         | Json web token                       |
+| [Lodash](https://lodash.com/)                                  | Javascript utility library           |
+| [Morgan](https://github.com/expressjs/morgan#readme)           | HTTP request middleware logger       |
+| [SQLite3](https://github.com/mapbox/node-sqlite3#readme)       | SQLite3 NodeJS adapter               |
+| [TypeORM](https://typeorm.io/)                                 | NodeJS object relation mapper        |
+| [Winston](https://github.com/winstonjs/winston#readme)         | Multi-transport logger               |
 
 ### Development
 

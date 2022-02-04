@@ -1,8 +1,9 @@
-import { ModelAccount } from "z@DBs/schemas/accounts/schema-account";
+import typeorm from "typeorm";
 import ErrorBase, { HTTPStatusCodes } from "z@Errors/error-base";
 import * as FixtureAccount from "z@Fixtures/accounts/fixture-account";
 import ServiceAccount from "./service-account";
 
+jest.mock("typeorm");
 jest.mock("z@DBs/schemas/accounts/schema-account");
 
 describe("[ServiceAccount]", () => {
@@ -25,7 +26,7 @@ describe("[ServiceAccount]", () => {
   describe("[findAccounts]", () => {
     it("(Happy Path) should return Account[] when called", async () => {
       jest
-        .spyOn(ModelAccount, "find")
+        .spyOn(typeorm.getManager.prototype, "find")
         // @ts-ignore
         .mockImplementationOnce((criteria: any) =>
           Promise.resolve([FixtureAccount.accounts])
@@ -37,7 +38,7 @@ describe("[ServiceAccount]", () => {
     it("(Happy Path) should return Account[] with sensitive query when called", async () => {
       const mockSelect = jest.fn();
       jest
-        .spyOn(ModelAccount, "find")
+        .spyOn(typeorm.getManager.prototype, "find")
         // @ts-ignore
         .mockImplementationOnce(
           jest.fn().mockImplementationOnce(() => ({
@@ -58,7 +59,7 @@ describe("[ServiceAccount]", () => {
   describe("[findAccountById]", () => {
     it("(Happy Path) should return Account when called", async () => {
       jest
-        .spyOn(ModelAccount, "findById")
+        .spyOn(typeorm.getManager.prototype, "find")
         // @ts-ignore
         .mockImplementationOnce((id: string) =>
           Promise.resolve(FixtureAccount.accounts[0])
@@ -72,7 +73,7 @@ describe("[ServiceAccount]", () => {
     it("(Happy Path) should return Account with sensitive query when called", async () => {
       const mockSelect = jest.fn();
       jest
-        .spyOn(ModelAccount, "findById")
+        .spyOn(typeorm.getManager.prototype, "find")
         // @ts-ignore
         .mockImplementationOnce(
           jest.fn().mockImplementationOnce(() => ({
@@ -95,7 +96,7 @@ describe("[ServiceAccount]", () => {
     it("(Failure Path) should return Failure NOT_FOUND when called with invalid id", async () => {
       expect.assertions(1);
       jest
-        .spyOn(ModelAccount, "findById")
+        .spyOn(typeorm.getManager.prototype, "find")
         // @ts-ignore
         .mockImplementationOnce((id: string) => Promise.resolve());
       try {
@@ -109,7 +110,7 @@ describe("[ServiceAccount]", () => {
   describe("[createAccount]", () => {
     it("(Happy Path) should return Account when called", async () => {
       jest
-        .spyOn(ModelAccount.prototype, "save")
+        .spyOn(typeorm.getManager.prototype, "save")
         // @ts-ignore
         .mockImplementationOnce((criteria: any) =>
           Promise.resolve(FixtureAccount.accounts[0])
@@ -124,7 +125,7 @@ describe("[ServiceAccount]", () => {
   describe("[updateAccount]", () => {
     it("(Happy Path) should return Account when called", async () => {
       jest
-        .spyOn(ModelAccount, "findById")
+        .spyOn(typeorm.getManager.prototype, "find")
         // @ts-ignore
         .mockImplementationOnce((id: string) =>
           Promise.resolve({ ...FixtureAccount.accounts[0], save: jest.fn() })
@@ -138,7 +139,7 @@ describe("[ServiceAccount]", () => {
     it("(Happy Path) should return Failure INTERNAL_SERVER_ERROR when called", async () => {
       expect.assertions(1);
       jest
-        .spyOn(ModelAccount, "findById")
+        .spyOn(typeorm.getManager.prototype, "find")
         // @ts-ignore
         .mockImplementationOnce((id: string) => Promise.resolve());
       try {
@@ -154,7 +155,7 @@ describe("[ServiceAccount]", () => {
   describe("[deleteAccount]", () => {
     it("(Happy Path) should return Account when called", async () => {
       jest
-        .spyOn(ModelAccount, "findById")
+        .spyOn(typeorm.getManager.prototype, "find")
         // @ts-ignore
         .mockImplementationOnce((criteria: any) =>
           Promise.resolve({ ...FixtureAccount.accounts[0], remove: jest.fn() })
@@ -169,7 +170,7 @@ describe("[ServiceAccount]", () => {
   it("(Happy Path) should return Failure NOT_FOUND when called", async () => {
     expect.assertions(1);
     jest
-      .spyOn(ModelAccount, "findById")
+      .spyOn(typeorm.getManager.prototype, "find")
       // @ts-ignore
       .mockImplementationOnce((id: string) => Promise.resolve());
     try {

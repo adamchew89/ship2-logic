@@ -1,5 +1,9 @@
-import { model, Schema } from "mongoose";
+import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
+export enum AccessType {
+  ADMIN = "admin",
+  NORMAL = "normal",
+}
 export interface Account {
   _id: string;
   name: string;
@@ -10,33 +14,30 @@ export interface Account {
   token?: string;
 }
 
-export enum AccessType {
-  ADMIN = "admin",
-  NORMAL = "normal",
-}
+@Entity("Account")
+class SchemaAccount {
+  @PrimaryGeneratedColumn({ name: "_id" })
+  _id!: number;
 
-const SchemaAccount = new Schema({
-  name: String,
-  email: { type: String, unique: true, index: true },
-  mobile: String,
-  access: {
-    type: String,
+  @Column({ name: "name" })
+  name!: string;
+
+  @Column({ name: "mobile" })
+  mobile!: string;
+
+  @Column({
+    name: "access",
+    type: "simple-enum",
     enum: AccessType,
-    select: false,
-    required: false,
     default: AccessType.NORMAL,
-  },
-  hash: {
-    type: String,
-    select: false,
-    required: false,
-  },
-  token: {
-    type: String,
-    required: false,
-  },
-});
+  })
+  access?: AccessType;
 
-export const ModelAccount = model("Account", SchemaAccount);
+  @Column({ name: "hash" })
+  hash?: string;
+
+  @Column({ name: "token" })
+  token?: string;
+}
 
 export default SchemaAccount;

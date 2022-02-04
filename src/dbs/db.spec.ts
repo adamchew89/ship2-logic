@@ -1,7 +1,7 @@
-import mongoose from "mongoose";
+import typeorm, { ConnectionOptions } from "typeorm";
 import * as Database from "./db";
 
-jest.mock("mongoose");
+jest.mock("typeorm");
 
 describe("[DB]", () => {
   it("should contain functions", () => {
@@ -20,8 +20,10 @@ describe("[DB]", () => {
     it("(Failure Path) should not throw an error when called", async () => {
       expect.assertions(1);
       jest
-        .spyOn(mongoose, "connect")
-        .mockImplementationOnce((uri: string) => Promise.reject(new Error()));
+        .spyOn(typeorm, "createConnection")
+        .mockImplementationOnce((args: ConnectionOptions) =>
+          Promise.reject(new Error())
+        );
       try {
         await Database.connect();
       } catch (error) {

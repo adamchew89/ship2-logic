@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import AllRoutes from "z@Routes/route-root";
 import Server from "z@Servers/server";
 import ENV from "z@Utils/env/utils-env";
