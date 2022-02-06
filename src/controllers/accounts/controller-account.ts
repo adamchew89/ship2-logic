@@ -28,6 +28,7 @@ class ControllerAccount {
   private authService = new ServiceAuth();
 
   init: RequestHandler = async (req, res, next) => {
+    console.time("controller - init");
     const body = req.body as RequestBody;
     try {
       const existingAccounts = await this.accountService.findAccounts();
@@ -57,10 +58,13 @@ class ControllerAccount {
       });
     } catch (error) {
       next(error);
+    } finally {
+      console.timeEnd("controller - init");
     }
   };
 
   getExistingAccount: RequestHandler = async (req, res, next) => {
+    console.time("controller - getExistingAccount");
     const params = req.params as RequestParams;
     try {
       const existingAccount = await this.accountService.findAccountById(
@@ -72,10 +76,13 @@ class ControllerAccount {
       });
     } catch (error) {
       next(error);
+    } finally {
+      console.timeEnd("controller - getExistingAccount");
     }
   };
 
   getAllAccount: RequestHandler = async (req, res, next) => {
+    console.time("controller - getAllAccount");
     try {
       const newAccount: Account[] = await this.accountService.findAccounts();
       res
@@ -83,10 +90,13 @@ class ControllerAccount {
         .json({ message: "Success", data: newAccount });
     } catch (error) {
       next(error);
+    } finally {
+      console.timeEnd("controller - getAllAccount");
     }
   };
 
   createNewAccount: RequestHandler = async (req, res, next) => {
+    console.time("controller - createNewAccount");
     const body = req.body as RequestBody;
     try {
       const existingAccounts = await this.accountService.findAccounts({
@@ -118,10 +128,13 @@ class ControllerAccount {
         .json({ message: "New account created.", data: newSanitizedAccount });
     } catch (error) {
       next(error);
+    } finally {
+      console.timeEnd("controller - createNewAccount");
     }
   };
 
   updateExistingAccount: RequestHandler = async (req, res, next) => {
+    console.time("controller - updateExistingAccount");
     const params = req.params as RequestParams;
     const body = req.body as RequestBody;
     try {
@@ -137,10 +150,13 @@ class ControllerAccount {
       });
     } catch (error) {
       next(error);
+    } finally {
+      console.timeEnd("controller - updateExistingAccount");
     }
   };
 
   deleteExistingAccount: RequestHandler = async (req, res, next) => {
+    console.time("controller - deleteExistingAccount");
     const params = req.params as RequestParams;
     try {
       const deletedAccount = await this.accountService.deleteAccount(
@@ -151,10 +167,13 @@ class ControllerAccount {
         .json({ message: "Account deleted.", data: deletedAccount });
     } catch (error) {
       next(error);
+    } finally {
+      console.timeEnd("controller - deleteExistingAccount");
     }
   };
 
   changeAccountPin: RequestHandler = async (req, res, next) => {
+    console.time("controller - changeAccountPin");
     const params = req.params as RequestParams;
     const body = req.body as RequestBody;
     try {
@@ -166,6 +185,8 @@ class ControllerAccount {
       res.status(HTTPStatusCodes.OK).json({ message: "Success" });
     } catch (error) {
       next(error);
+    } finally {
+      console.timeEnd("controller - changeAccountPin");
     }
   };
 }

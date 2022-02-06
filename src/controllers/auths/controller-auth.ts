@@ -19,6 +19,7 @@ class ControllerAuth {
   private authService = new ServiceAuth();
 
   login: RequestHandler = async (req, res, next) => {
+    console.time("controller - login");
     const body = req.body as RequestBody;
     const data: Account = {
       mobile: body.mobile,
@@ -33,13 +34,19 @@ class ControllerAuth {
         .json({ message: "Success", data: authenticationData });
     } catch (error) {
       next(error);
+    } finally {
+      console.timeEnd("controller - login");
     }
   };
 
-  verifyToken: RequestHandler = async (req, res, next) =>
+  verifyToken: RequestHandler = async (req, res, next) => {
+    console.time("controller - verifyToken");
     res.status(HTTPStatusCodes.OK).json({ message: "Success" });
+    console.timeEnd("controller - verifyToken");
+  };
 
   resetPin: RequestHandler = async (req, res, next) => {
+    console.time("controller - resetPin");
     const params = req.params as RequestParams;
     const body = req.body as RequestBody;
     try {
@@ -47,6 +54,8 @@ class ControllerAuth {
       res.status(HTTPStatusCodes.OK).json({ message: "Success" });
     } catch (error) {
       next(error);
+    } finally {
+      console.timeEnd("controller - resetPin");
     }
   };
 }
