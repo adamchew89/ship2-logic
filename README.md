@@ -49,7 +49,6 @@ To get a running copy on your local instance, checkout or download a copy of the
 If you do not have access to the continental github repository above, kindly contact the administrator(s) for permission:
 
 - Adam Chew <adamchew89@gmail.com>
-- Stoche Media <stochemedia@gmail.com>
 
 <hr/>
 
